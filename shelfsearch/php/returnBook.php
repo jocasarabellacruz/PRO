@@ -1,25 +1,35 @@
 <?php
-include 'php/conn.php'; // Include database connection
+include 'conn.php'; // Include the database connection
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $studentID = $_POST['studentID']; // Get student ID from the form or request
-    $barcode = $_POST['barcode']; // Get book barcode from the form or request
+header('Content-Type: application/json');
 
-    // Update the record in the bookrecord table
-    $query = "UPDATE bookrecord 
-              SET bookstatus = 'returned', dateReturned = NOW() 
-              WHERE studentID = $studentID AND barcode = $barcode AND bookstatus = 'borrowed'";
+$data = json_decode(file_get_contents('php://input'), true);
 
-    if (mysqli_query($conn, $query)) {
-        // Update the book's status to available in the books table
-        $updateQuery = "UPDATE books SET status = 'available' WHERE barcode = $barcode";
-        if (mysqli_query($conn, $updateQuery)) {
-            echo "Book successfully returned!";
+if (isset($data['barcode'])) {
+    $barcode = $data['barcode'];
+    $studentID = 202201798; // Replace with dynamic student ID if available
+
+    // Check if the book is currently borrowed
+    $checkQuery = "SELECT bookstatus FROM bookrecord 
+                   WHERE barcode = '$barcode' AND studentID = '$studentID' AND bookstatus = 'borrowed'";
+    $checkResult = mysqli_query($conn, $checkQuery);
+
+    if ($checkResult && mysqli_num_rows($checkResult) > 0) {
+        // Update the book record to returned
+        $updateRecordQuery = "UPDATE bookrecord 
+                              SET bookstatus = 'returned', dateReturned = NOW() 
+                              WHERE barcode = '$barcode' AND studentID = '$studentID' AND bookstatus = 'borrowed'";
+        $updateBookQuery = "UPDATE books SET status = 'Available' WHERE barcode = '$barcode'";
+
+        if (mysqli_query($conn, $updateRecordQuery) && mysqli_query($conn, $updateBookQuery)) {
+            echo json_encode(['success' => true, 'message' => 'Book returned successfully!']);
         } else {
-            echo "Error updating book status: " . mysqli_error($conn);
+            echo json_encode(['success' => false, 'message' => 'Failed to return the book.']);
         }
     } else {
-        echo "Error updating book record: " . mysqli_error($conn);
+        echo json_encode(['success' => false, 'message' => 'Book is not currently borrowed.']);
     }
+} else {
+    echo json_encode(['success' => false, 'message' => 'No barcode provided.']);
 }
 ?>

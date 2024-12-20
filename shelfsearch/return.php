@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Borrow a Book</title>
+    <title>Return a Book</title>
     <link rel="stylesheet" href="borrow.css">
     <!-- Montserrat Font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
 
     <!-- Main Section -->
     <main>
-        <h2>BORROW A BOOK</h2>
+        <h2>RETURN A BOOK</h2>
         <div class="container">
             <!-- Left Side: Book Record -->
             <section class="book-record">
@@ -43,7 +43,7 @@
                 <div class="loader"></div>
                 <p class="scanning-text">Scanning Book...</p>
                 <p class="manual-text">Can’t scan book? Manually input book ID here</p>
-                <button class="manual-input" onclick="window.location.href='borrowBookInput.php'">Input Book</button>
+                <button class="manual-input" onclick="window.location.href='returnBookInput.php'">Input Book</button>
             </section>
         </div>
     </main>

@@ -1,24 +1,54 @@
 <?php
-include 'php/conn.php'; // Include database connection
+include 'conn.php'; // Include the database connection
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $studentID = $_POST['studentID']; // Get student ID from the form or request
-    $barcode = $_POST['barcode']; // Get book barcode from the form or request
+header('Content-Type: application/json');
 
-    // Insert a new record into the bookrecord table
-    $query = "INSERT INTO bookrecord (studentID, barcode, bookstatus, dateBorrowed) 
-              VALUES ($studentID, $barcode, 'borrowed', NOW())";
+$data = json_decode(file_get_contents('php://input'), true);
 
-    if (mysqli_query($conn, $query)) {
-        // Update the book's status to borrowed in the books table
-        $updateQuery = "UPDATE books SET status = 'borrowed' WHERE barcode = $barcode";
-        if (mysqli_query($conn, $updateQuery)) {
-            echo "Book successfully borrowed!";
+if (isset($data['barcode'])) {
+    $barcode = $data['barcode'];
+    $studentID = 202201798; // Replace with dynamic student ID if available
+
+    // Check if the student has already borrowed 3 books
+    $checkBorrowLimitQuery = "SELECT COUNT(*) AS borrowedCount 
+                              FROM bookrecord 
+                              WHERE studentID = '$studentID' AND bookstatus = 'borrowed'";
+    $borrowLimitResult = mysqli_query($conn, $checkBorrowLimitQuery);
+    $borrowLimitRow = mysqli_fetch_assoc($borrowLimitResult);
+
+    if ($borrowLimitRow['borrowedCount'] >= 3) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'You have already borrowed 3 books. Please return a book before borrowing another.'
+        ]);
+        exit;
+    }
+
+    // Check if the book is available
+    $checkQuery = "SELECT status FROM books WHERE barcode = '$barcode'";
+    $checkResult = mysqli_query($conn, $checkQuery);
+
+    if ($checkResult && mysqli_num_rows($checkResult) > 0) {
+        $row = mysqli_fetch_assoc($checkResult);
+
+        if ($row['status'] === 'Available') {
+            // Update the book status to Borrowed
+            $updateBookQuery = "UPDATE books SET status = 'Borrowed' WHERE barcode = '$barcode'";
+            $recordBookQuery = "INSERT INTO bookrecord (studentID, barcode, bookstatus, dateBorrowed)
+                                VALUES ('$studentID', '$barcode', 'borrowed', NOW())";
+
+            if (mysqli_query($conn, $updateBookQuery) && mysqli_query($conn, $recordBookQuery)) {
+                echo json_encode(['success' => true, 'message' => 'Book borrowed successfully!']);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Failed to borrow the book.']);
+            }
         } else {
-            echo "Error updating book status: " . mysqli_error($conn);
+            echo json_encode(['success' => false, 'message' => 'Book is already borrowed or unavailable.']);
         }
     } else {
-        echo "Error adding book record: " . mysqli_error($conn);
+        echo json_encode(['success' => false, 'message' => 'Invalid barcode.']);
     }
+} else {
+    echo json_encode(['success' => false, 'message' => 'No barcode provided.']);
 }
 ?>
