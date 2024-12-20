@@ -1,39 +1,18 @@
 <?php
-header('Content-Type: application/json');
+include 'conn.php'; // Database connection file
 
-// Connect to the database
-$conn = new mysqli("localhost", "root", "", "shelfsearchdb");
+// Query to get the logged-in student
+$query = "SELECT s.studentFName, s.studentLName 
+          FROM studentlog l 
+          JOIN studentinfo s ON l.studentID = s.studentID 
+          WHERE l.status = 'logged_in' 
+          LIMIT 1";
 
-if ($conn->connect_error) {
-    echo json_encode(['success' => false, 'error' => $conn->connect_error]);
-    exit();
-}
+$result = mysqli_query($conn, $query);
 
-// Fetch the logged-in student ID
-$query = "SELECT studentID FROM studentlog WHERE status = 'logged_in' AND loggedOutTime IS NULL LIMIT 1";
-$result = $conn->query($query);
-
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $studentID = $row['studentID'];
-
-    // Fetch the student's name from the studentinfo table
-    $query = "SELECT CONCAT(studentFName, ' ', studentLName) AS name FROM studentinfo WHERE studentID = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $studentID);
-    $stmt->execute();
-    $stmt->bind_result($name);
-    $stmt->fetch();
-
-    if ($name) {
-        echo json_encode(['success' => true, 'name' => $name]);
-    } else {
-        echo json_encode(['success' => false, 'error' => 'Student not found.']);
-    }
-    $stmt->close();
+if ($row = mysqli_fetch_assoc($result)) {
+    echo htmlspecialchars($row['studentFName'] . " " . $row['studentLName']);
 } else {
-    echo json_encode(['success' => false, 'error' => 'No logged-in student found.']);
+    echo "Student";
 }
-
-$conn->close();
 ?>

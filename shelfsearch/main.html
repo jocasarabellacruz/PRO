@@ -11,7 +11,7 @@
 <body>
     <!-- Header Section -->
     <header>
-        <h1>HELLO, JOCAS ARABELLA!</h1>
+        <h1>HELLO, <span id="studentName">Loading...</span>!</h1>
         <div class="digital-clock" id="digitalClock"></div>
     </header>
 
@@ -46,7 +46,7 @@
     </div>
 
     <!-- Return Button -->
-    <a href="index.html" class="return-btn">Logout</a>
+    <a href="index.html" class="return-btn" id="logoutBtn">Logout</a>
 
 
     <!-- Digital Clock Script -->
@@ -67,6 +67,28 @@
 
 
     </script>
+
+    <script>
+        document.getElementById("logoutBtn").addEventListener("click", function (event) {
+            event.preventDefault(); // Prevent the default redirection temporarily
+
+            // Perform the logout action by calling the backend
+            fetch("php/logout.php", {
+                method: "POST",
+            })
+            .then((response) => {
+                if (response.ok) {
+                    console.log("Logged out successfully!");
+                    // Redirect to index.html after logout
+                    window.location.href = "index.html";
+                } else {
+                    console.error("Logout failed!");
+                }
+            })
+            .catch((error) => console.error("Error during logout:", error));
+        });
+    </script>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -92,6 +114,34 @@
         });
     </script>
 
-
+    <script>
+        // Fetch the logged-in student's name from the server
+        $(document).ready(function () {
+            $.ajax({
+                url: 'fetchStudentName.php',
+                method: 'GET',
+                success: function (data) {
+                    $('#studentName').text(data.trim());
+                },
+                error: function () {
+                    $('#studentName').text('Student');
+                }
+            });
+        });
+    </script><script>
+        // Fetch the logged-in student's name from the server
+        $(document).ready(function () {
+            $.ajax({
+                url: 'php/fetchStudentName.php',
+                method: 'GET',
+                success: function (data) {
+                    $('#studentName').text(data.trim());
+                },
+                error: function () {
+                    $('#studentName').text('Student');
+                }
+            });
+        });
+    </script>       
 </body>
 </html>
