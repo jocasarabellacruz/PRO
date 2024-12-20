@@ -61,19 +61,9 @@
         updateClock();
 
         document.getElementById("LibrisButton").addEventListener("click", function () {
-        // Call the backend to start the chatbot
-        fetch("http://localhost:5000/start-chatbot", { method: "POST" })
-            .then((response) => {
-                if (response.ok) {
-                    console.log("Chatbot backend started successfully!");
-                    // Redirect to the chatbot's index.html
-                    window.location.href = "chatbot/templates/index.html";
-                } else {
-                    console.error("Failed to start the chatbot backend.");
-                }
-            })
-            .catch((error) => console.error("Error starting chatbot:", error));
-    });
+    window.location.href = "http://127.0.0.1:5000/";
+});
+
 
 
     </script>

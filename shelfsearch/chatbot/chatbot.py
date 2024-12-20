@@ -1,14 +1,15 @@
-from flask import Flask, request, jsonify, render_template,session
+from flask import Flask, request, jsonify, render_template
 from groq import Groq
 import MySQLdb
 from MySQLdb.cursors import DictCursor  # Import DictCursor
 import os
+
 secret_key = os.urandom(24)
 app = Flask(__name__)
 
 app.secret_key = os.urandom(24)
 # Groq API setup
-GROQ_API_KEY = "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"
+GROQ_API_KEY = "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"
 client = Groq(api_key=GROQ_API_KEY)
 
 # MySQL Database connection
@@ -44,20 +45,24 @@ def ask_question():
     [
         f"{book['Title']}, {book['Author']}, "
         f"{book['Genre']}, {book['PublicationYear']}, "
-        f"{book['Synopsis']}, {book['Status']}, "
-        f"{book['ShelfLocation']}, {book['Barcode']}"
+        f"{book['Synopsis']}, availability {book['Status']}, "
+        f"{book['ShelfLocation']}, barcode:{book['Barcode']}"
         for book in books_data
     ]   
 )
 
         system_message_content = (
-    "You are a library management system assistant. Use the provided library books as your sole source of information. "
+    "You are a library books management system assistant. Use the provided library_books as your sole source of information. "
     "Your sole purpose is to assist users with information about books in the library."
+    "Reserving a book is not allowed"
+    "Books that are borrowed is not available for borrowing."
+    "Ensure that the user's requested books exist in the library_books database."
+    "books can be borrowed by going to the borrowing section of the system then scan or type the barcode of the book."
     "Answer user questions accurately and helpfully based on the content of these summaries. Do not reference being an AI "
     "or any limitations—respond as if you are knowledgeable about the books in the library. "
-    "If the book is not in the book data, do not provide a fabricated or non-existent answer stating that the book is available."
-    f"Here is the book data:\n{library_books}"
+    f"Here is the book data:\n{library_books}, Always check this data if the user ask about book."
 )
+# Always check this data if the user ask about book Availability
         # Query library data from the database
         # cursor.execute("SELECT question, value FROM library_info")
         # library_data = cursor.fetchall()
@@ -65,9 +70,9 @@ def ask_question():
         # Close the database connection
         cursor.close()
         connection.close()
-        previous_context = session.get('context', '')
-        if previous_context:
-            system_message_content = f"Previous context: {previous_context}\n{system_message_content}"
+        # previous_context = session.get('context', '')
+        # if previous_context:
+        #     system_message_content = f"Previous context: {previous_context}\n{system_message_content}"
 
         # Check if the user's question matches any of the library data
         # for row in library_data:
@@ -93,7 +98,7 @@ def ask_question():
 
         # Extract the answer from the Groq response
         ai_answer = completion.choices[0].message.content
-        session['context'] = ai_answer.strip()
+        #session['context'] = ai_answer.strip()
 
         # If the AI's answer contains multiple points, it will include '\n' for newlines
         if ai_answer:
