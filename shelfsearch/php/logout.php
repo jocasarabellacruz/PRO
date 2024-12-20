@@ -1,26 +1,18 @@
 <?php
-header('Content-Type: application/json');
+include 'conn.php'; // Include the database connection
 
-// Connect to the database
-$conn = new mysqli("localhost", "root", "", "shelfsearchdb");
+// Update the logged-in user's status to 'logged_out'
+$query = "UPDATE studentlog SET status = 'logged_out', loggedOutTime = NOW() 
+          WHERE status = 'logged_in'";
 
-if ($conn->connect_error) {
-    echo json_encode(['success' => false, 'error' => $conn->connect_error]);
-    exit();
-}
-
-// Update the logged-in student's status to 'logged_out'
-$query = "
-    UPDATE studentlog
-    SET status = 'logged_out', loggedOutTime = NOW()
-    WHERE status = 'logged_in' AND loggedOutTime IS NULL
-    LIMIT 1
-";
-if ($conn->query($query) === TRUE) {
-    echo json_encode(['success' => true]);
+if (mysqli_query($conn, $query)) {
+    // Send a success response
+    http_response_code(200); // OK
+    session_start();
+    session_destroy(); // Destroy the session
 } else {
-    echo json_encode(['success' => false, 'error' => $conn->error]);
+    // Send an error response
+    http_response_code(500); // Internal Server Error
+    echo "Error logging out: " . mysqli_error($conn);
 }
-
-$conn->close();
 ?>
