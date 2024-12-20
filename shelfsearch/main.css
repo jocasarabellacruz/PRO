@@ -1,0 +1,324 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Body Styling */
+body {
+    height: 100vh;
+    background-color: #f4f4f4; /* Light gray for overall background */
+    cursor: url('img/cursor.png'), auto;
+}
+
+/* Header Section */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #0f2043;
+    border-bottom: 2px solid #ddd;
+}
+
+header h1 {
+    font-weight: bold;
+    font-size: 1.8rem;
+    color: #E8AF30;
+}
+
+.digital-clock {
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #e8c766;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #0f2043;
+}
+
+/* Info Container with Background Image */
+.info-container {
+    background-image: url('img/1.jpg'); /* Add your image path */
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding: 50px 20px;
+    position: relative;
+    margin-top: -10px;
+}
+
+.info-container h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #E8AF30;
+}
+
+.info-container p {
+    font-size: 1rem;
+    margin: 20px auto;
+    max-width: 600px;
+    color: #ffffff;
+
+}
+
+.search-box {
+    margin-top: 20px;
+    padding: 10px;
+    width: 80%;
+    max-width: 500px;
+    border: none;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 1rem;
+    cursor: url('img/cursorclick.png'), pointer;
+}
+
+.logo-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.logo-circle img {
+    width: 80%;
+    height: auto;
+}
+
+.button-container {
+    background-color: #0f2043; /* Dark navy background */
+    color: white;
+    display: flex; /* Use flexbox */
+    flex-direction: row; /* Arrange buttons in a row */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    gap: 40px; /* Add space between buttons */
+    height: 283px; /* Set a fixed height for the container */
+    padding: 20px;
+    margin: 0 auto; /* Center the container horizontally */
+    text-align: center;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.button {
+    background-color: #e7e6dd; /* Gold button background */
+    color: #0f2043; /* Dark navy text */
+    width: 250px;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    cursor: url('img/cursorclick.png'), pointer;
+}
+
+.button:hover {
+    background-color: #E8AF30; /* Dark navy on hover */
+    color: white;
+    transform: scale(1.05);
+}
+
+
+/* Libris Button Wrapper */
+.libris-btn-wrapper {
+    position: relative; /* Relative positioning for containing the speech bubble */
+    cursor: url('img/cursorclick.png'), pointer;
+}
+
+/* Libris Button */
+.libris-btn {
+    position: relative; /* Parent of the speech bubble */
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    color: #0f2043;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: bold;
+    border: 2px solid #E8AF30;
+    cursor: pointer;
+    cursor: url('img/cursorclick.png'), pointer;
+}
+
+/* Speech Bubble */
+.speech-bubble {
+    position: absolute;
+    transform-origin: 0% 100%;
+    text-align: center;
+    background-color: #5a5a5a;
+    color: white;
+    border-radius: 10px;
+    width: 150px;
+    padding: 10px;
+    bottom: 120%; /* Position above the LIBRIS button */
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    animation-fill-mode: forwards;
+    font-size: 0.9rem;
+    pointer-events: none; /* Prevent hover on the speech bubble itself */
+    cursor: url('img/cursorclick.png'), pointer;
+}
+
+/* Speech Bubble Tail */
+.speech-bubble::before {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 10px;
+    border-style: solid;
+    border-color: #5a5a5a transparent transparent transparent;
+}
+
+/* Keyframe Animations */
+@keyframes expand-bounce {
+    0% {
+        transform: translateX(-50%) scale(0);
+    }
+    50% {
+        transform: translateX(-50%) scale(1.25);
+    }
+    100% {
+        transform: translateX(-50%) scale(1);
+    }
+}
+
+@keyframes shrink {
+    0% {
+        transform: translateX(-50%) scale(1);
+    }
+    100% {
+        transform: translateX(-50%) scale(0);
+    }
+}
+
+
+/* Return Button */
+.return-btn {
+    position: fixed;
+    bottom: 20px; 
+    left: 20px;   
+    padding: 10px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size:30px;
+    font-weight: bold;
+    color: #E8AF30; 
+    text-decoration: none;
+    border: 2px solid #E8AF30;
+    border-radius: 5px;
+    background-color: #0f2043; 
+    transition: all 0.3s ease;
+    z-index: 1001; 
+    cursor: url('img/cursorclick.png'), pointer;
+}
+
+.return-btn:hover {
+    background-color: #E8AF30;
+    color: #0f2043;
+}
+
+
+/* Libris Button Wrapper */
+.libris-wrapper {
+    position: fixed; /* Makes the wrapper fixed on the viewport */
+    bottom: 30px; /* Adjust the distance from the bottom */
+    right: 40px; /* Adjust the distance from the left */
+    display: flex; /* To align content within the wrapper */
+    align-items: center;
+    justify-content: center;
+    z-index: 1100; /* Ensure it's above other elements */
+}
+
+/* Libris Button */
+.libris-btn {
+    width: 150px;
+    height: 150px;
+    background-color: #E8AF30;
+    color: #0f2043;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+
+/* Image inside the Libris Circle */
+.libris-image {
+    width: 70%; /* Adjust size to fit inside the circle */
+    height: auto;
+    object-fit: contain; /* Ensures the image maintains aspect ratio */
+    cursor: url('img/cursorclick.png'), pointer;
+}
+
+/* Speech Bubble */
+.speech-bubble {
+    position: absolute;
+    bottom: 110%; /* Adjust position above the circle */
+    left: 10%;
+    transform: translateX(-50%) scale(0);
+    width: 300px;
+    padding: 10px;
+    background-color: #41557e;
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: normal;
+    animation-fill-mode: forwards;
+    pointer-events: none;
+}
+
+/* Speech Bubble Tail */
+.speech-bubble::before {
+    content: "";
+    position: absolute;
+    bottom: -17px;
+    left: 70%;
+    transform: translateX(-50%);
+    border-width: 10px;
+    border-style: solid;
+    border-color: #3b5892 transparent transparent transparent;
+}
+
+/* Keyframe Animations */
+@keyframes expand-bounce {
+    0% {
+        transform: translateX(-50%) scale(0);
+    }
+    50% {
+        transform: translateX(-50%) scale(1.25);
+    }
+    100% {
+        transform: translateX(-50%) scale(1);
+    }
+}
+
+@keyframes shrink {
+    0% {
+        transform: translateX(-50%) scale(1);
+    }
+    100% {
+        transform: translateX(-50%) scale(0);
+    }
+}

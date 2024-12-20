@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <link rel="stylesheet" href="main.css">
+    <!-- Montserrat Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>HELLO, JOCAS ARABELLA!</h1>
+        <div class="digital-clock" id="digitalClock"></div>
+    </header>
+
+    <!-- ShelfSearch Section with Background Image -->
+    <section class="info-container">
+        <div class="logo-circle">
+            <img src="img/logo.png" alt="Logo">
+        </div>
+        <h2>SHELFSEARCH</h2>
+        <p>Your AI-powered library kiosk for streamlined literature discovery and book management. 
+           Designed to assist students, researchers, and book enthusiasts, 
+           <span class="highlight">ShelfSearch</span> transforms how you interact with library resources.</p>
+        <input type="text" class="search-box" placeholder="SEARCH BOOK">
+    </section>
+
+    <!-- Buttons Section with Plain Background -->
+    <section class="button-container">
+        <div class="button" onclick="window.location.href='borrow.html';">
+            BORROW A BOOK
+        </div>        
+        <div class="button">RETURN A BOOK</div>
+        <div class="button">SEE BOOK RECOMMENDATIONS</div>
+    </section>
+
+    <div class="libris-wrapper">
+        <div class="libris-btn" id="LibrisButton">
+            <!-- Image inside the circle -->
+            <img src="img/libris2.png" alt="Libris Icon" class="libris-image">
+            <!-- Speech bubble -->
+            <div class="speech-bubble" id="SpeechBubble">Hello, I'm Libris! ShelfSearch's AI-powered assistant for streamlined library management. I can help you search for books, provide recommendations, and make literature discovery fast and easy</div>
+        </div>
+    </div>
+
+    <!-- Return Button -->
+    <a href="index.html" class="return-btn">Logout</a>
+
+
+    <!-- Digital Clock Script -->
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const date = now.toLocaleDateString();
+            const time = now.toLocaleTimeString();
+            document.getElementById('digitalClock').textContent = `${date} ${time}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        document.getElementById("LibrisButton").addEventListener("click", function () {
+        // Call the backend to start the chatbot
+        fetch("http://localhost:5000/start-chatbot", { method: "POST" })
+            .then((response) => {
+                if (response.ok) {
+                    console.log("Chatbot backend started successfully!");
+                    // Redirect to the chatbot's index.html
+                    window.location.href = "chatbot/templates/index.html";
+                } else {
+                    console.error("Failed to start the chatbot backend.");
+                }
+            })
+            .catch((error) => console.error("Error starting chatbot:", error));
+    });
+
+
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var librisButton = $("#LibrisButton");
+            var speechBubble = $("#SpeechBubble");
+
+            // Hover effect for the speech bubble
+            librisButton.hover(
+                function () {
+                    speechBubble.css({
+                        "animation-name": "expand-bounce",
+                        "animation-duration": "0.25s",
+                    });
+                },
+                function () {
+                    speechBubble.css({
+                        "animation-name": "shrink",
+                        "animation-duration": "0.1s",
+                    });
+                }
+            );
+        });
+    </script>
+
+
+</body>
+</html>

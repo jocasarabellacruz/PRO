@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to ShelfSearch</title>
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="logo-wrapper">
+        <div class="logo">
+            <img src="img/logo.png" alt="Logo">
+        </div>
+    </div>
+
+    <header>
+        <h1>WELCOME TO SHELFSEARCH!</h1>
+        <div class="digital-clock" id="digitalClock"></div>
+    </header>
+
+    <div class="container">
+        <a href="scan_id.html" class="button">
+            <img src="img/scan_id.png" alt="Scan Icon">
+            SCAN ID
+        </a>
+        <a href="manual_input.html" class="button">
+            <img src="img/manual_input.png" alt="Manual Input Icon">
+            INPUT ID
+        </a>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const date = now.toLocaleDateString();
+            const time = now.toLocaleTimeString();
+            document.getElementById('digitalClock').textContent = `${date} ${time}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>

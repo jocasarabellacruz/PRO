@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to ShelfSearch</title>
+    <link rel="stylesheet" href="scan_id.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="logo-wrapper">
+        <div class="logo">
+            <img src="img/logo.png" alt="Logo">
+        </div>
+    </div>
+
+    <header class="shelfsearch-header">
+        <h1>WELCOME TO SHELFSEARCH!</h1>
+        <div class="digital-clock" id="digitalClock"></div>
+    </header>
+
+    <div class="scanning-container">
+        <div class="loader"></div>
+        <p class="scanning-text">Scanning ID...</p>
+    </div>
+
+    <a href="index.html" class="return-btn">Return</a>
+
+    <div id="successModal" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="icon-box">
+                        <img src="img/check.png" alt="Success Icon" style="width: 70px; height: 70px;">
+                    </div>
+                    <h4 class="modal-title">Scan Success!</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center" id="studentInfo">Scanned:</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-block" id="proceedButton">Proceed</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const date = now.toLocaleDateString();
+            const time = now.toLocaleTimeString();
+            document.getElementById('digitalClock').textContent = `${date} ${time}`;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        function showModal(studentID) {
+            const studentInfo = document.getElementById('studentInfo');
+            studentInfo.textContent = `Scanned: ${studentID}`;
+            $('#successModal').modal('show');
+        }
+
+        document.getElementById('proceedButton').addEventListener('click', () => {
+            $('#successModal').modal('hide');
+            setTimeout(() => {
+                window.location.href = 'main.html';
+            }, 500);
+        });
+
+        function checkLoginStatus() {
+            fetch('php/checkstatus.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'logged_in') {
+                        showModal(data.studentID);
+                    }
+                })
+                .catch(error => console.error('Error checking login status:', error));
+        }
+
+        setInterval(checkLoginStatus, 2000);
+    </script>
+</body>
+</html>

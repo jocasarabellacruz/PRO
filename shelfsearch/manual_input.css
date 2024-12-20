@@ -1,0 +1,172 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    cursor: url('img/cursor.png'), auto;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    animation: slideshow 15s infinite;
+}
+
+@keyframes slideshow {
+    0% {
+        background-image: url('img/1.jpg');
+    }
+    33% {
+        background-image: url('img/2.jpg');
+    }
+    66% {
+        background-image: url('img/3.jpg');
+    }
+    100% {
+        background-image: url('img/1.jpg');
+    }
+}
+
+.logo-wrapper {
+    position: fixed;
+    top: 10px;
+    left: 20px;
+    z-index: 1100;
+}
+
+.logo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid #E8AF30;
+    background-color: #162f65;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.logo img {
+    width: 80%;
+    height: auto;
+}
+
+header.shelfsearch-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #0f2043;
+    z-index: 1000;
+}
+
+header.shelfsearch-header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 3.3rem;
+    color: #E8AF30;
+    text-transform: uppercase;
+    text-align: center;
+    flex: 1;
+    margin-left: 300px;
+    margin-top: 20px;
+}
+
+.digital-clock {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #0f2043;
+    padding: 10px 15px;
+    background-color: #e8c766;
+    border-radius: 5px;
+}
+
+.main-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 150px);
+    margin-top: 100px;
+    z-index: 900;
+    padding: 20px;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    z-index: 950;
+}
+
+.input-box {
+    width: 350px;
+    height: 80px;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0f2043;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #E8AF30;
+}
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.keypad button {
+    width: 150px;
+    height: 80px;
+    font-size: 2rem;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #e7e6dd;
+    transition: background-color 0.2s, transform 0.2s ease;
+    cursor: url('img/cursorclick.png'), pointer;
+}
+
+.keypad button:hover {
+    background-color: #E8AF30;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.keypad button:active {
+    background-color: #ccc;
+    transform: scale(1);
+}
+
+.return-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    color: #E8AF30;
+    text-decoration: none;
+    border: 2px solid #E8AF30;
+    border-radius: 5px;
+    background-color: #0f2043;
+    transition: all 0.3s ease;
+    z-index: 1001;
+    cursor: url('img/cursorclick.png'), pointer;
+}
+
+.return-btn:hover {
+    background-color: #E8AF30;
+    color: #0f2043;
+}

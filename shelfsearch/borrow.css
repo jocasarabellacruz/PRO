@@ -1,0 +1,228 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    cursor: url('img/cursor.png'), auto;
+}
+
+/* Body */
+body {
+    height: 100vh;
+    background-color: #f4f4f4;
+    animation: slideshow 15s infinite;
+}
+
+@keyframes slideshow {
+    0% {
+        background-image: url('img/1.jpg');
+    }
+    33% {
+        background-image: url('img/2.jpg');
+    }
+    66% {
+        background-image: url('img/3.jpg');
+    }
+    100% {
+        background-image: url('img/1.jpg');
+    }
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #0f2043;
+    border-bottom: 2px solid #ddd;
+}
+
+header h1 {
+    font-weight: bold;
+    font-size: 1.8rem;
+    color: #E8AF30;
+}
+
+.digital-clock {
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #e8c766;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #0f2043;
+}
+
+/* Main Section */
+main {
+    padding: 20px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #E8AF30;
+}
+
+/* Container */
+.container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+/* Book Record Section */
+.book-record {
+    flex: 1;
+    background-color: #0f2043;
+    padding: 20px;
+    border-radius: 10px;
+    height: 600px;
+}
+
+.book-record h3 {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #E8AF30;
+    font-size: 1.7rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+th, td {
+    border: 3px solid #0f2043;
+    padding: 10px;
+    text-align: center;
+    color: #0f2043;
+}
+
+th {
+    background-color: #41557e;
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 1.2rem;
+}
+
+
+.navigation {
+    position: fixed;
+    bottom: 40px; 
+    left: 300px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 1.5rem;
+    background-color: #fff;
+    border: 2px solid #000;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    cursor: url('img/cursorclick.png'), pointer;
+}
+
+.btn:hover {
+    background-color: #e8af30;
+    color: #fff;
+}
+
+/* Scanning Section */
+.scanning-section {
+    flex: 1;
+    display: flex; /* Center child elements */
+    flex-direction: column; /* Stack loader and text vertically */
+    justify-content: center; /* Vertically center content */
+    align-items: center; /* Horizontally center content */
+    text-align: center;
+    height: 100%; /* Make sure the section fills the parent height */
+    padding: 20px;
+    margin: 0; /* Reset margins */
+    margin-top: 100px;
+}
+
+.scanning-text {
+    font-size: 2rem;
+    margin: 20px 0;
+    font-weight: bold;
+    color: #E8AF30;
+}
+
+.manual-text {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    font-weight: 300;
+    color: #E8AF30;
+}
+
+.manual-input {
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #0f2043;
+}
+
+.manual-input:hover {
+    background-color: #e8af30;
+    color: #fff;
+}
+
+
+
+
+.loader {
+    width: 60px;
+    aspect-ratio: 2;
+    --_g: no-repeat radial-gradient(circle closest-side, #E8AF30 90%, #0000); /* Gold color */
+    background: 
+        var(--_g) 0% 50%,
+        var(--_g) 50% 50%,
+        var(--_g) 100% 50%;
+    background-size: calc(100% / 3) 50%;
+    animation: l3 1s infinite linear;
+    margin-bottom: 20px; /* Add spacing below the loader */
+}
+
+@keyframes l3 {
+    20% { background-position: 0% 0%, 50% 50%, 100% 50%; }
+    40% { background-position: 0% 100%, 50% 0%, 100% 50%; }
+    60% { background-position: 0% 50%, 50% 100%, 100% 0%; }
+    80% { background-position: 0% 50%, 50% 50%, 100% 100%; }
+}
+
+
+/* Return Button */
+.return-btn {
+    position: fixed;
+    bottom: 20px; /* Distance from the bottom */
+    left: 20px;   /* Distance from the left */
+    padding: 10px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size:30px;
+    font-weight: bold;
+    color: #E8AF30; /* Gold text color */
+    text-decoration: none;
+    border: 2px solid #E8AF30;
+    border-radius: 5px;
+    background-color: #0f2043; /* Dark navy background */
+    transition: all 0.3s ease;
+    z-index: 1001; /* Ensures it stays above other elements */
+    cursor: url('img/cursorclick.png'), pointer;
+}
+
+.return-btn:hover {
+    background-color: #E8AF30;
+    color: #0f2043;
+}
