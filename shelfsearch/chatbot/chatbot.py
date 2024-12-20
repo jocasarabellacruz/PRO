@@ -53,14 +53,15 @@ def ask_question():
 
         system_message_content = (
     "You are a library books management system assistant. Use the provided library_books as your sole source of information. "
+    f"Here is the book data:\n{library_books}, Always check this data if the user ask about book and author."
     "Your sole purpose is to assist users with information about books in the library."
     "Reserving a book is not allowed"
     "Books that are borrowed is not available for borrowing."
-    "Ensure that the user's requested books exist in the library_books database."
+    "Ensure that the user's requested books exist in the library_books."
     "books can be borrowed by going to the borrowing section of the system then scan or type the barcode of the book."
     "Answer user questions accurately and helpfully based on the content of these summaries. Do not reference being an AI "
     "or any limitations—respond as if you are knowledgeable about the books in the library. "
-    f"Here is the book data:\n{library_books}, Always check this data if the user ask about book."
+    "Online resources,program and events of the library can be checked in the https://www.thelibrary.dyci.edu.ph"
 )
 # Always check this data if the user ask about book Availability
         # Query library data from the database
@@ -90,7 +91,7 @@ def ask_question():
                 {"role": "user", "content": user_question},
             ],
             temperature=1,
-            max_tokens=32768,
+            max_tokens=1024,
             top_p=1,
             stream=False,
             stop=None,
