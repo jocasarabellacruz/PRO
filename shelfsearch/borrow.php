@@ -12,7 +12,7 @@
 <body>
     <!-- Header -->
     <header>
-        <h1>HELLO, JOCAS ARABELLA!</h1>
+        <h1>SHELFSEARCH</h1>
         <div class="digital-clock" id="digitalClock"></div>
     </header>
 

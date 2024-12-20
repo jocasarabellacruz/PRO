@@ -9,7 +9,7 @@
 /* Body Styling */
 body {
     height: 100vh;
-    background-color: #f4f4f4; /* Light gray for overall background */
+    background-color: #0f2043; /* Light gray for overall background */
     cursor: url('img/cursor.png'), auto;
 }
 
@@ -65,18 +65,6 @@ header h1 {
 
 }
 
-.search-box {
-    margin-top: 20px;
-    padding: 10px;
-    width: 80%;
-    max-width: 500px;
-    border: none;
-    border-radius: 20px;
-    text-align: center;
-    font-size: 1rem;
-    cursor: url('img/cursorclick.png'), pointer;
-}
-
 .logo-circle {
     width: 100px;
     height: 100px;
@@ -102,7 +90,7 @@ header h1 {
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
     gap: 40px; /* Add space between buttons */
-    height: 283px; /* Set a fixed height for the container */
+    height: 300px; /* Set a fixed height for the container */
     padding: 20px;
     margin: 0 auto; /* Center the container horizontally */
     text-align: center;
