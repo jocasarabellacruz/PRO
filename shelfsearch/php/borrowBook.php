@@ -1,5 +1,5 @@
 <?php
-include 'conn.php'; // Include the database connection
+include 'conn.php';
 
 header('Content-Type: application/json');
 
@@ -7,9 +7,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 
 if (isset($data['barcode'])) {
     $barcode = $data['barcode'];
-    $studentID = 202201798; // Replace with dynamic student ID if available
-
-    // Check if the student has already borrowed 3 books
+    $studentID = 202201798; 
     $checkBorrowLimitQuery = "SELECT COUNT(*) AS borrowedCount 
                               FROM bookrecord 
                               WHERE studentID = '$studentID' AND bookstatus = 'borrowed'";
@@ -24,7 +22,6 @@ if (isset($data['barcode'])) {
         exit;
     }
 
-    // Check if the book is available
     $checkQuery = "SELECT status FROM books WHERE barcode = '$barcode'";
     $checkResult = mysqli_query($conn, $checkQuery);
 
@@ -32,7 +29,6 @@ if (isset($data['barcode'])) {
         $row = mysqli_fetch_assoc($checkResult);
 
         if ($row['status'] === 'Available') {
-            // Update the book status to Borrowed
             $updateBookQuery = "UPDATE books SET status = 'Borrowed' WHERE barcode = '$barcode'";
             $recordBookQuery = "INSERT INTO bookrecord (studentID, barcode, bookstatus, dateBorrowed)
                                 VALUES ('$studentID', '$barcode', 'borrowed', NOW())";

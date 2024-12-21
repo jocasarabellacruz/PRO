@@ -1,7 +1,6 @@
 <?php
-include 'conn.php'; // Database connection file
+include 'conn.php';
 
-// Query to get the logged-in student
 $query = "SELECT s.studentFName, s.studentLName 
           FROM studentlog l 
           JOIN studentinfo s ON l.studentID = s.studentID 

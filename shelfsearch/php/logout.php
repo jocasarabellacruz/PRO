@@ -1,18 +1,15 @@
 <?php
-include 'conn.php'; // Include the database connection
+include 'conn.php'; 
 
-// Update the logged-in user's status to 'logged_out'
 $query = "UPDATE studentlog SET status = 'logged_out', loggedOutTime = NOW() 
           WHERE status = 'logged_in'";
 
 if (mysqli_query($conn, $query)) {
-    // Send a success response
-    http_response_code(200); // OK
+    http_response_code(200); 
     session_start();
-    session_destroy(); // Destroy the session
+    session_destroy(); 
 } else {
-    // Send an error response
-    http_response_code(500); // Internal Server Error
+    http_response_code(500); 
     echo "Error logging out: " . mysqli_error($conn);
 }
 ?>

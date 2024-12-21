@@ -1,5 +1,5 @@
 <?php
-include 'conn.php'; // Include the database connection
+include 'conn.php'; 
 
 header('Content-Type: application/json');
 
@@ -7,15 +7,13 @@ $data = json_decode(file_get_contents('php://input'), true);
 
 if (isset($data['barcode'])) {
     $barcode = $data['barcode'];
-    $studentID = 202201798; // Replace with dynamic student ID if available
+    $studentID = 202201798; 
 
-    // Check if the book is currently borrowed
-    $checkQuery = "SELECT bookstatus FROM bookrecord 
+$checkQuery = "SELECT bookstatus FROM bookrecord 
                    WHERE barcode = '$barcode' AND studentID = '$studentID' AND bookstatus = 'borrowed'";
     $checkResult = mysqli_query($conn, $checkQuery);
 
     if ($checkResult && mysqli_num_rows($checkResult) > 0) {
-        // Update the book record to returned
         $updateRecordQuery = "UPDATE bookrecord 
                               SET bookstatus = 'returned', dateReturned = NOW() 
                               WHERE barcode = '$barcode' AND studentID = '$studentID' AND bookstatus = 'borrowed'";

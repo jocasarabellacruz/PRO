@@ -5,17 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Page</title>
     <link rel="stylesheet" href="main.css">
-    <!-- Montserrat Font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header Section -->
     <header>
         <h1>HELLO, <span id="studentName">Loading...</span>!</h1>
         <div class="digital-clock" id="digitalClock"></div>
     </header>
 
-    <!-- ShelfSearch Section with Background Image -->
     <section class="info-container">
         <div class="logo-circle">
             <img src="img/logo.png" alt="Logo">
@@ -26,7 +23,6 @@
            <span class="highlight">ShelfSearch</span> transforms how you interact with library resources.</p>
     </section>
 
-    <!-- Buttons Section with Plain Background -->
     <section class="button-container">
         <div class="button" onclick="window.location.href='borrow.php';">
             BORROW A BOOK
@@ -41,18 +37,14 @@
 
     <div class="libris-wrapper">
         <div class="libris-btn" id="LibrisButton">
-            <!-- Image inside the circle -->
             <img src="img/libris2.png" alt="Libris Icon" class="libris-image">
-            <!-- Speech bubble -->
             <div class="speech-bubble" id="SpeechBubble">Hello, I'm Libris! ShelfSearch's AI-powered assistant for streamlined library management. I can help you search for books, provide recommendations, and make literature discovery fast and easy</div>
         </div>
     </div>
 
-    <!-- Return Button -->
     <a href="index.html" class="return-btn" id="logoutBtn">Logout</a>
 
 
-    <!-- Digital Clock Script -->
     <script>
         function updateClock() {
             const now = new Date();
@@ -65,24 +57,19 @@
 
         document.getElementById("LibrisButton").addEventListener("click", function () {
     window.location.href = "http://127.0.0.1:5000/";
-});
-
-
-
+    });
     </script>
 
     <script>
         document.getElementById("logoutBtn").addEventListener("click", function (event) {
-            event.preventDefault(); // Prevent the default redirection temporarily
+            event.preventDefault();
 
-            // Perform the logout action by calling the backend
             fetch("php/logout.php", {
                 method: "POST",
             })
             .then((response) => {
                 if (response.ok) {
                     console.log("Logged out successfully!");
-                    // Redirect to index.html after logout
                     window.location.href = "index.html";
                 } else {
                     console.error("Logout failed!");
@@ -99,7 +86,6 @@
             var librisButton = $("#LibrisButton");
             var speechBubble = $("#SpeechBubble");
 
-            // Hover effect for the speech bubble
             librisButton.hover(
                 function () {
                     speechBubble.css({
@@ -118,7 +104,6 @@
     </script>
 
     <script>
-        // Fetch the logged-in student's name from the server
         $(document).ready(function () {
             $.ajax({
                 url: 'fetchStudentName.php',
@@ -132,7 +117,6 @@
             });
         });
     </script><script>
-        // Fetch the logged-in student's name from the server
         $(document).ready(function () {
             $.ajax({
                 url: 'php/fetchStudentName.php',

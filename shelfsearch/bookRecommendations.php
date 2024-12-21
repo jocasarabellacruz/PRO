@@ -15,9 +15,9 @@
 
     <main>
         <h2>Recommended Books</h2>
+        <h2 style="font-size: 1rem; color: #ffffff; font-weight: 300;">Displayed here are personalized book recommendations tailored to your interests, based on your borrowing history. We've curated these selections to help you discover more of what you love. Enjoy exploring new titles and authors that resonate with your past choices!</h2>
         <div class="book-record">
             <div id="recommendationsContainer">
-                <!-- Recommendations will be dynamically populated -->
             </div>
         </div>
     </main>
@@ -35,7 +35,6 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Fetch the current logged-in student ID
         $(document).ready(function () {
             $.ajax({
                 url: 'php/getCurrentStudent.php',
@@ -45,14 +44,13 @@
                     if (data.success) {
                         const studentID = data.studentID;
 
-                        // Use the studentID to fetch recommendations
                         $.ajax({
                             url: 'php/getRecommendations.php',
                             method: 'POST',
                             data: { studentID: studentID },
                             success: function (data) {
-                                $('#recommendationsContainer').html(data); // Populate recommendations
-                                $('#studentName').text(studentID); // Display the student ID or name
+                                $('#recommendationsContainer').html(data); 
+                                $('#studentName').text(studentID);
                             },
                             error: function () {
                                 $('#recommendationsContainer').html('<p>No recommendations available.</p>');

@@ -1,12 +1,11 @@
 <?php
-include 'conn.php'; // Include the database connection
+include 'conn.php'; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $studentID = intval($_POST['studentID']); // Sanitize input
+    $studentID = intval($_POST['studentID']);
 
-    // Fetch genres of books the student has borrowed
     $borrowedGenresQuery = "
-        SELECT DISTINCT b.genre
+        SELECT DISTINCT lower(trim(b.genre)) as genre
         FROM bookrecord br
         JOIN books b ON br.barcode = b.barcode
         WHERE br.studentID = '$studentID' AND br.bookstatus = 'borrowed'";
@@ -14,32 +13,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $borrowedGenresResult = mysqli_query($conn, $borrowedGenresQuery);
     $genres = [];
 
+    if (!$borrowedGenresResult) {
+        echo "Error fetching genres: " . mysqli_error($conn);
+        exit;
+    }
+
     while ($row = mysqli_fetch_assoc($borrowedGenresResult)) {
         $genres[] = $row['genre'];
     }
 
     if (!empty($genres)) {
-        // Generate recommendations based on genres
         $genreList = "'" . implode("','", $genres) . "'";
         $recommendationQuery = "
             SELECT title, author, genre, synopsis, publicationYear
             FROM books
-            WHERE genre IN ($genreList) AND status = 'Available'
+            WHERE lower(trim(genre)) IN ($genreList) AND status = 'Available'
             ORDER BY RAND()
             LIMIT 5";
 
         $recommendationResult = mysqli_query($conn, $recommendationQuery);
 
-        if (mysqli_num_rows($recommendationResult) > 0) {
+        if (!$recommendationResult) {
+            echo "Error fetching recommendations: " . mysqli_error($conn);
+            exit;
+        }
+
+        $numResults = mysqli_num_rows($recommendationResult);
+
+        if ($numResults > 0) {
+            echo "<table border='1'>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Genre</th>
+                        <th>Year</th>
+                        <th>Synopsis</th>
+                    </tr>";
             while ($row = mysqli_fetch_assoc($recommendationResult)) {
-                echo "<div class='recommendation-card'>
-                        <h4>" . htmlspecialchars($row['title']) . "</h4>
-                        <p><strong>Author:</strong> " . htmlspecialchars($row['author']) . "</p>
-                        <p><strong>Genre:</strong> " . htmlspecialchars($row['genre']) . "</p>
-                        <p><strong>Year:</strong> " . htmlspecialchars($row['publicationYear']) . "</p>
-                        <p><strong>Synopsis:</strong> " . htmlspecialchars($row['synopsis']) . "</p>
-                      </div>";
+                echo "<tr>
+                        <td>" . htmlspecialchars($row['title']) . "</td>
+                        <td>" . htmlspecialchars($row['author']) . "</td>
+                        <td>" . htmlspecialchars($row['genre']) . "</td>
+                        <td>" . htmlspecialchars($row['publicationYear']) . "</td>
+                        <td>" . htmlspecialchars($row['synopsis']) . "</td>
+                      </tr>";
             }
+            echo "</table>";
         } else {
             echo "<p>No recommendations found based on your borrowing history.</p>";
         }

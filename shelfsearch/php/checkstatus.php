@@ -1,5 +1,5 @@
 <?php
-require_once 'conn.php'; // Ensure this file connects to your database
+require_once 'conn.php'; 
 
 header('Content-Type: application/json');
 

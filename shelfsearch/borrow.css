@@ -1,4 +1,3 @@
-/* General Reset */
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +6,6 @@
     cursor: url('img/cursor.png'), auto;
 }
 
-/* Body */
 body {
     height: 100vh;
     background-color: #f4f4f4;
@@ -29,7 +27,6 @@ body {
     }
 }
 
-/* Header */
 header {
     display: flex;
     justify-content: space-between;
@@ -54,7 +51,6 @@ header h1 {
     color: #0f2043;
 }
 
-/* Main Section */
 main {
     padding: 20px;
 }
@@ -66,7 +62,6 @@ h2 {
     color: #E8AF30;
 }
 
-/* Container */
 .container {
     display: flex;
     justify-content: space-between;
@@ -74,7 +69,6 @@ h2 {
     margin-top: 10px;
 }
 
-/* Book Record Section */
 .book-record {
     flex: 1;
     background-color: #0f2043;
@@ -137,17 +131,16 @@ th {
     color: #fff;
 }
 
-/* Scanning Section */
 .scanning-section {
     flex: 1;
-    display: flex; /* Center child elements */
-    flex-direction: column; /* Stack loader and text vertically */
-    justify-content: center; /* Vertically center content */
-    align-items: center; /* Horizontally center content */
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    height: 100%; /* Make sure the section fills the parent height */
+    height: 100%;
     padding: 20px;
-    margin: 0; /* Reset margins */
+    margin: 0;
     margin-top: 100px;
 }
 

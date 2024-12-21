@@ -1,7 +1,6 @@
 <?php
-include 'conn.php'; // Include database connection
+include 'conn.php'; 
 
-// Query to fetch the current logged-in student
 $query = "SELECT studentID FROM studentlog WHERE status = 'logged_in' ORDER BY LogID DESC LIMIT 1";
 $result = mysqli_query($conn, $query);
 
