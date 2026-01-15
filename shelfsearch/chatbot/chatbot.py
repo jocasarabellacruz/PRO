@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 app.secret_key = os.urandom(24)
 # Groq API setup
-GROQ_API_KEY = "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"
+GROQ_API_KEY = "////////////////////////////////////////"
 client = Groq(api_key=GROQ_API_KEY)
 
 # MySQL Database connection
